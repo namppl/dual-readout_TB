@@ -1,6 +1,8 @@
 #include "TBread.h"
 #include "TBdetector.h"
 #include "TButility.h"
+#include "TBmonit.h"
+#include "TBplot.h"
 #include <boost/python.hpp>
 
 BOOST_PYTHON_MODULE(pydrcTB) {
@@ -29,4 +31,20 @@ BOOST_PYTHON_MODULE(pydrcTB) {
     .def("loadped", &TButility::loadped)
     .def("find", &TButility::find)
     .def("retrievePed", &TButility::retrievePed);
+
+  boost::python::class_<TBmonit>("TBmonit")
+    .def("setFastmodeFiles", &TBmonit::setFastmodeFiles)
+    .def("setWaveformFiles", &TBmonit::setWaveformFiles)
+    .def("setPedestalPath", &TBmonit::setPedestalPath)
+    .def("setMappingPath", &TBmonit::setMappingPath)
+    .def("SetADCmax", &TBmonit::SetADCmax)
+    .def("SetOutputName", &TBmonit::SetOutputName)
+    .def("MonitPlots", &TBmonit::MonitPlots);
+
+  boost::python::class_<TBplot>("TBplot", boost::python::init<int, int, const std::string&, const std::string&>())
+  .def("openFile", &TBplot::openFile)
+  .def("closeFile", &TBplot::closeFile)
+  .def("loadTH1D", &TBplot::loadTH1D)
+  .def("loadTH2D", &TBplot::loadTH2D)
+  .def("Draw", &TBplot::Draw);
 }
